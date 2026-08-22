@@ -14,10 +14,6 @@ workflows:
         script: |
           keychain initialize
           app-store-connect create-certificate --type IOS_DISTRIBUTION || true
-          app-store-connect create-certificate --type IOS_DEVELOPMENT || true
-          app-store-connect fetch-signing-files "PolyTICK.us.app" \
-            --type IOS_APP_DEVELOPMENT \
-            --create || true
           app-store-connect fetch-signing-files "PolyTICK.us.app" \
             --type IOS_APP_STORE \
             --create
@@ -26,10 +22,15 @@ workflows:
       - name: Get Flutter packages
         script: |
           flutter packages pub get
-      - name: Flutter build IPA
+      - name: Flutter build IPA and Export
         script: |
-          flutter build ipa --release \
-            --export-options-plist=/Users/builder/export_options.plist
+          flutter build ipa --release --no-codesign
+          ARCHIVE_PATH=$(find build/ios/archive -name "*.xcarchive" | head -n 1)
+          echo "Exporting archive from: $ARCHIVE_PATH"
+          xcodebuild -exportArchive \
+            -archivePath "$ARCHIVE_PATH" \
+            -exportPath build/ios/ipa \
+            -exportOptionsPlist /Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
