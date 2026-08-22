@@ -1,0 +1,3 @@
+# Redirect non-www to www (301 permanent redirect)
+https://polytick.us/* https://www.polytick.us/:splat 301!
+http://polytick.us/* https://www.polytick.us/:splat 301!
