@@ -13,6 +13,7 @@ workflows:
       - name: Fetch and create signing files from Apple
         script: |
           keychain initialize
+          app-store-connect create-certificate --type IOS_DISTRIBUTION || true
           app-store-connect fetch-signing-files "PolyTICK.us.app" \
             --type IOS_APP_STORE \
             --create
