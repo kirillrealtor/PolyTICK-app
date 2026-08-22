@@ -14,6 +14,10 @@ workflows:
         script: |
           keychain initialize
           app-store-connect create-certificate --type IOS_DISTRIBUTION || true
+          app-store-connect create-certificate --type IOS_DEVELOPMENT || true
+          app-store-connect fetch-signing-files "PolyTICK.us.app" \
+            --type IOS_APP_DEVELOPMENT \
+            --create || true
           app-store-connect fetch-signing-files "PolyTICK.us.app" \
             --type IOS_APP_STORE \
             --create
