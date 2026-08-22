@@ -1,0 +1,43 @@
+workflows:
+  ios-workflow:
+    name: iOS App Store Release
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      flutter: default
+      xcode: latest
+      cocoapods: default
+      groups:
+        - appstore_credentials
+    scripts:
+      - name: Set up code signing settings on Xcode project
+        script: |
+          xcode-project use-profiles || true
+      - name: Get Flutter packages
+        script: |
+          flutter packages pub get
+      - name: Install CocoaPods
+        script: |
+          cd ios && pod install && cd ..
+      - name: Flutter build IPA
+        script: |
+          if [ -f /Users/builder/export_options.plist ]; then
+            flutter build ipa --release --export-options-plist=/Users/builder/export_options.plist
+          else
+            flutter build ipa --release --no-codesign
+          fi
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+    publishing:
+      email:
+        recipients:
+          - hafiznoorulhassan987@gmail.com
+        notify:
+          success: true
+          failure: true
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        submit_to_app_store: false
