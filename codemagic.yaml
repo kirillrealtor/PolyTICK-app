@@ -7,8 +7,8 @@ workflows:
       flutter: default
       xcode: latest
       cocoapods: default
-      groups:
-        - appstore_credentials
+      vars:
+        APP_ID: 6742000000 # Your App Store Connect Apple ID (optional)
     scripts:
       - name: Set up code signing settings on Xcode project
         script: |
@@ -21,15 +21,11 @@ workflows:
           cd ios && pod install && cd ..
       - name: Flutter build IPA
         script: |
-          if [ -f /Users/builder/export_options.plist ]; then
-            flutter build ipa --release --export-options-plist=/Users/builder/export_options.plist
-          else
-            flutter build ipa --release --no-codesign
-          fi
+          flutter build ipa --release --no-codesign
     artifacts:
       - build/ios/ipa/*.ipa
+      - build/ios/archive/*.xcarchive
       - /tmp/xcodebuild_logs/*.log
-      - flutter_drive.log
     publishing:
       email:
         recipients:
@@ -37,7 +33,3 @@ workflows:
         notify:
           success: true
           failure: true
-      app_store_connect:
-        auth: integration
-        submit_to_testflight: true
-        submit_to_app_store: false
