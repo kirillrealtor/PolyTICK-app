@@ -1,7 +1,7 @@
 name: polytick_app
 description: "PolyTICK - Track politician stock trades with 8 layers of intelligence."
 publish_to: 'none'
-version: 1.0.1+3
+version: 1.0.1+4
 
 environment:
   sdk: ^3.10.0
