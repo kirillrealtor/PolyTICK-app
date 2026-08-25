@@ -101,14 +101,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       return;
     }
 
-    // ── Dedicated Google Play Reviewer / Demo Fast-Track Bypass ──
-    if (email == 'google-review@polytick.us' ||
+    // ── Dedicated App Store / Play Store Reviewer & Demo Fast-Track Bypass ──
+    if (email == 'apple-review@polytick.us' ||
+        email == 'apple@polytick.us' ||
+        email == 'google-review@polytick.us' ||
         email == 'reviewer@polytick.us' ||
         email == 'demo@polytick.us') {
       setState(() {
         _magicLinkSent = true;
         _showOtpInput = true;
-        _deviceId = 'google-review-device';
+        _deviceId = 'review-device';
         _error = null;
         _loading = false;
       });
@@ -159,8 +161,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     final email = _emailController.text.trim().toLowerCase();
 
-    // ── Dedicated Google Play Reviewer / Demo Code Check ──
-    if ((email == 'google-review@polytick.us' ||
+    // ── Dedicated App Store / Play Store Reviewer & Demo Code Check ──
+    if ((email == 'apple-review@polytick.us' ||
+            email == 'apple@polytick.us' ||
+            email == 'google-review@polytick.us' ||
             email == 'reviewer@polytick.us' ||
             email == 'demo@polytick.us') &&
         (code == '777888' || code == '123456')) {

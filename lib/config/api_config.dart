@@ -16,6 +16,7 @@ class ApiConfig {
   static const String confirmMagicCode = '/auth/confirm-magic-code';
   static const String refreshToken = '/auth/refresh-token';
   static const String register = '/auth/register';
+  static const String deleteAccount = '/auth/delete-account';
 
   // ── Subscription ──
   static const String checkAccessSecure = '/check-access-secure';

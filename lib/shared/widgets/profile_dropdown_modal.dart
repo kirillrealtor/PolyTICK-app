@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:polytick_app/core/auth/auth_provider.dart';
+import 'package:polytick_app/shared/widgets/delete_account_dialog.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ProfileDropdownModal extends ConsumerWidget {
@@ -396,6 +397,38 @@ class ProfileDropdownModal extends ConsumerWidget {
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.2,
                         color: const Color(0xFFFF0F0F),
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 10),
+
+                // 4. DELETE ACCOUNT Button (App Store Guideline 5.1.1 compliant)
+                Center(
+                  child: TextButton.icon(
+                    style: TextButton.styleFrom(
+                      foregroundColor: const Color(0xFF94A3B8),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      visualDensity: VisualDensity.compact,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      DeleteAccountDialog.show(context);
+                    },
+                    icon: const Icon(
+                      Icons.delete_outline_rounded,
+                      size: 14,
+                      color: Color(0xFFEF4444),
+                    ),
+                    label: Text(
+                      'Delete Account',
+                      style: GoogleFonts.inter(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFFEF4444),
+                        decoration: TextDecoration.underline,
+                        decorationColor: const Color(0xFFEF4444).withAlpha(120),
                       ),
                     ),
                   ),

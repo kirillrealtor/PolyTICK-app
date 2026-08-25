@@ -147,6 +147,18 @@ class AuthNotifier extends StateNotifier<AuthState> {
       isAuthenticated: false,
     );
   }
+
+  /// Delete Account — permanently deletes the account and wipes local auth state.
+  Future<Map<String, dynamic>> deleteAccount() async {
+    final result = await _authService.deleteAccount();
+    if (result['success'] == true) {
+      state = const AuthState(
+        loading: false,
+        isAuthenticated: false,
+      );
+    }
+    return result;
+  }
 }
 
 // ════════════════════════════════════════════════════════════

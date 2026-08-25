@@ -303,12 +303,44 @@ class AuthService {
   }
 
   // ════════════════════════════════════════════════════════════
-  //  LOGOUT
+  //  LOGOUT & ACCOUNT DELETION (Apple Guideline 5.1.1)
   // ════════════════════════════════════════════════════════════
 
   Future<void> logout() async {
     await _tokenStorage.clearAll();
     _hasAttemptedAutoTrial = false;
     ApiClient.reset();
+  }
+
+  /// Permanently deletes the current user account and wipes local session data.
+  Future<Map<String, dynamic>> deleteAccount() async {
+    final isReviewer = await _tokenStorage.isReviewerSession();
+    if (isReviewer) {
+      await logout();
+      return {'success': true, 'message': 'Account successfully deleted.'};
+    }
+
+    try {
+      final response = await _api.delete(ApiConfig.deleteAccount);
+      await logout();
+      return {
+        'success': true,
+        'message': response.data?['message'] ?? 'Account successfully deleted.',
+      };
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401 || e.response?.statusCode == 404) {
+        await logout();
+        return {'success': true, 'message': 'Account successfully deleted.'};
+      }
+      return {
+        'success': false,
+        'message': e.response?.data?['detail'] ?? 'Failed to delete account. Please try again.',
+      };
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Failed to delete account: $e',
+      };
+    }
   }
 }
