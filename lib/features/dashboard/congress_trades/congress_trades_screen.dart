@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:polytick_app/features/dashboard/congress_trades/congress_analytics_provider.dart';
 import 'package:polytick_app/features/dashboard/congress_trades/congress_trades_provider.dart';
 import 'package:polytick_app/features/dashboard/congress_trades/widgets/trade_card.dart';
 import 'package:polytick_app/shared/widgets/error_boundary.dart';
@@ -272,106 +271,10 @@ class _CongressTradesScreenState extends ConsumerState<CongressTradesScreen> {
             errorMessage: err.toString(),
             onRetry: () {
               ref.invalidate(congressTradesProvider);
-              ref.invalidate(congressStatsProvider);
             },
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildTopMetrics(CongressStatsModel stats) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return GridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          shrinkWrap: true,
-          childAspectRatio: 2.85,
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-            _buildMetricCard(
-              value: stats.totalTrades,
-              label: 'TRADES',
-              icon: Icons.swap_horiz_rounded,
-            ),
-            _buildMetricCard(
-              value: stats.totalVolume,
-              label: 'VOLUME',
-              icon: Icons.account_balance_wallet_outlined,
-            ),
-            _buildMetricCard(
-              value: stats.membersCount,
-              label: 'MEMBERS OF CONGRESS',
-              icon: Icons.person_outline_rounded,
-            ),
-            _buildMetricCard(
-              value: stats.tickersCount,
-              label: 'STOCK TICKERS',
-              icon: Icons.show_chart_rounded,
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget _buildMetricCard({
-    required String value,
-    required String label,
-    required IconData icon,
-  }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
-      decoration: BoxDecoration(
-        color: const Color(0xFF131722),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.white.withAlpha(12)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  value,
-                  style: GoogleFonts.poppins(
-                    fontSize: 14.5,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white,
-                    letterSpacing: -0.3,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 1),
-                Text(
-                  label,
-                  style: GoogleFonts.inter(
-                    fontSize: 8.5,
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xFF64748B),
-                    letterSpacing: 0.4,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: 26,
-            height: 26,
-            decoration: BoxDecoration(
-              color: Colors.white.withAlpha(8),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, size: 13, color: const Color(0xFF94A3B8)),
-          ),
-        ],
-      ),
     );
   }
 
