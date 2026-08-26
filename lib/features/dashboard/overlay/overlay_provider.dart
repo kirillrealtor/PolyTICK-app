@@ -16,8 +16,8 @@ final overlaySortDirProvider = StateProvider<String>((ref) => 'desc');
 final overlaySearchProvider = StateProvider<String>((ref) => '');
 
 final _arkDio = Dio(BaseOptions(
-  connectTimeout: const Duration(seconds: 15),
-  receiveTimeout: const Duration(seconds: 20),
+  connectTimeout: const Duration(seconds: 3),
+  receiveTimeout: const Duration(seconds: 4),
   headers: {
     'Accept': 'application/json',
     'User-Agent': 'PolyTICK/1.0',
@@ -30,6 +30,7 @@ final overlayDataProvider = FutureProvider<List<OverlayItem>>((ref) async {
   final daysAgo = DateTime.now().subtract(Duration(days: days));
   final dateFromStr = '${daysAgo.year}-${daysAgo.month.toString().padLeft(2, '0')}-${daysAgo.day.toString().padLeft(2, '0')}';
 
+  final fetchLimit = days <= 45 ? 600 : (days <= 90 ? 1200 : 3000);
   const etfs = ['ARKK', 'ARKW', 'ARKQ', 'ARKG', 'ARKF', 'ARKX'];
 
   try {
@@ -37,13 +38,13 @@ final overlayDataProvider = FutureProvider<List<OverlayItem>>((ref) async {
     final polFuture = ApiClient.instance.get(
       ApiConfig.congressTrades,
       queryParameters: {
-        'limit': 50000,
+        'limit': fetchLimit,
         'exclude_na': true,
         'pub_start_date': dateFromStr,
       },
       options: Options(
-        receiveTimeout: const Duration(seconds: 90),
-        sendTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 15),
+        sendTimeout: const Duration(seconds: 10),
       ),
     );
 
