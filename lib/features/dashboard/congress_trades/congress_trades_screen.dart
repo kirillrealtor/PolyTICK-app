@@ -100,20 +100,10 @@ class _CongressTradesScreenState extends ConsumerState<CongressTradesScreen> {
   @override
   Widget build(BuildContext context) {
     final asyncResult = ref.watch(congressTradesProvider);
-    final asyncStats = ref.watch(congressStatsProvider);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // ── 1. Top 4 Live Metric KPI Cards ──
-        asyncStats.when(
-          data: (stats) => _buildTopMetrics(stats),
-          loading: () => _buildTopMetrics(const CongressStatsModel()),
-          error: (_, __) => _buildTopMetrics(const CongressStatsModel()),
-        ),
-
-        const SizedBox(height: 10),
-
         // ── Government Data Provenance & Non-Affiliation Header ──
         Container(
           width: double.infinity,
