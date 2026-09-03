@@ -69,6 +69,13 @@ class FreeGiftDialog extends StatelessWidget {
       icon: Icons.home_work_rounded,
       accentColor: Color(0xFF0EA5E9),
     ),
+    _GiftItemData(
+      number: "8",
+      title: "Art of Prompting for Book Writing: Master AI and Create Timeless Masterpieces",
+      url: "https://docs.google.com/document/d/1f34Y7LqmG82U16SjppQwd5BPaLzT-CLUnfmIZCPDPSc/edit?usp=sharing",
+      icon: Icons.edit_note_rounded,
+      accentColor: Color(0xFFEC4899),
+    ),
   ];
 
   @override

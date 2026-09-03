@@ -236,6 +236,8 @@ class FreeGiftBonusCard extends StatelessWidget {
                 _featureItem("6", '10,000% Win in Equities / Stocks'),
                 const SizedBox(height: 14),
                 _featureItem("7", 'Real Estate Investor for Dummies'),
+                const SizedBox(height: 14),
+                _featureItem("8", 'Art of Prompting for Book Writing'),
                 const SizedBox(height: 10),
               ],
             ),
