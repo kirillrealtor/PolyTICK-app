@@ -223,15 +223,19 @@ class FreeGiftBonusCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                _featureItem("100's Financial Literacy Songs"),
+                _featureItem("1", "100's Financial Literacy Songs"),
                 const SizedBox(height: 14),
-                _featureItem('Millionaire Mindset Affirmations'),
+                _featureItem("2", 'Amazon Book for Free'),
                 const SizedBox(height: 14),
-                _featureItem('Amazon Book for Free'),
+                _featureItem("3", 'Millionaire Mindset Affirmations'),
                 const SizedBox(height: 14),
-                _featureItem('The Millionaire Trader E-Book'),
+                _featureItem("4", 'Life Philosophy Book'),
                 const SizedBox(height: 14),
-                _featureItem('Life Philosophy Book'),
+                _featureItem("5", 'The Millionaire Trader E-Book'),
+                const SizedBox(height: 14),
+                _featureItem("6", '10,000% Win in Equities / Stocks'),
+                const SizedBox(height: 14),
+                _featureItem("7", 'Real Estate Investor for Dummies'),
                 const SizedBox(height: 10),
               ],
             ),
@@ -241,26 +245,25 @@ class FreeGiftBonusCard extends StatelessWidget {
     );
   }
 
-  Widget _featureItem(String text) {
+  Widget _featureItem(String number, String text) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Custom Outlined Check Circle Icon matching Figma
         Container(
           width: 22,
           height: 22,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(
-              color: const Color(0xFF000000),
-              width: 1.8,
-            ),
+            color: Color(0xFFC60C30),
           ),
-          child: const Center(
-            child: Icon(
-              Icons.check_rounded,
-              size: 15,
-              color: Color(0xFF000000),
+          child: Center(
+            child: Text(
+              number,
+              style: GoogleFonts.inter(
+                fontSize: 11,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
